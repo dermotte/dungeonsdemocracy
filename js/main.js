@@ -27,8 +27,33 @@ function addMessage(username, myText) {
     })
 }
 
+function addSession(sessionID) {
+    console.log("Adding session " + sessionID);
+    db.collection("sessions").add({
+        sessionID: sessionID,
+        state: "lobby"
+    })
+}
+
+function getLobbySessions(addToLobbyPage) {
+    db.collection("sessions").where("state", "==", "lobby")
+        .get()
+        .then(function(querySnapshot) {
+            addToLobbyPage(querySnapshot)
+            // querySnapshot.forEach(function(doc) {
+            //     // doc.data() is never undefined for query doc snapshots
+            //     console.log(doc.id, " => ", doc.data());
+            // });
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
+}
+
+
+
 function listenToMessages() {
-    db.collection("chat")//.where("state", "==", "CA")
+    db.collection("chat")//.where("sessionID", "==", "--our--session--is--from--local--storage")
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
                 if (change.type === "added") {
