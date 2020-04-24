@@ -18,6 +18,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-firestore.js"></script>
 
+    <script type="text/javascript" src="js/utils.js" defer></script>
     <script type="application/javascript" src="js/main.js"></script>
     <title>Dungeons &amp; Democracy</title>
 </head>
@@ -32,13 +33,13 @@
 
     </div>
     <!-- chat form -->
-    <form action="javascript:;" onsubmit="addMessage('minime', $('#inputText').val())">
+    <form action="javascript:;" onsubmit="addMessage(utils.getUserName(), $('#inputText').val())">
         <div class="form-group row">
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="inputText" name="inputText" placeholder="... your text goes here" required>
             </div>
             <div class="col-sm-2">
-                <button type="submit" id="submitButton" class="btn btn-primary">Abschicken</button>
+                <button type="submit" id="submitButton" class="btn btn-primary">Send</button>
             </div>
         </div>
 

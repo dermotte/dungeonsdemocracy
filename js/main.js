@@ -22,11 +22,9 @@ function addMessage(username, myText) {
     db.collection("chat").add({
         text: myText,
         user: username,
-        time: new Date()
+        time: new Date(),
+        sessionID: "xyz"
     })
-
-    // add to local page:
-    // $("#messages").append("<div class=\"card col-sm-12 \" style=\"margin: 3pt\"><div class=\"card-body\">" + myText + " <i style='font-size: 6pt'>(" + (new Date()).toLocaleString("de-AT")+")</i></div></div>");
 }
 
 function listenToMessages() {
@@ -35,7 +33,10 @@ function listenToMessages() {
             snapshot.docChanges().forEach(function(change) {
                 if (change.type === "added") {
                     console.log("New messsage: ", change.doc.data());
-                    $("#messages").append("<div class=\"card col-sm-12 \" style=\"margin: 3pt\"><div class=\"card-body\">" + change.doc.data().text + " <i style='font-size: 6pt'>(" + change.doc.data().time.toDate().toLocaleString("de-AT")+")</i></div></div>");
+                    $("#messages").append("<div class=\"card col-sm-12 \" style=\"margin: 3pt\"><div class=\"card-body\">"
+                        + change.doc.data().user + ": "
+                        + change.doc.data().text + " <i style='font-size: 6pt'>("
+                        + change.doc.data().time.toDate().toLocaleString("de-AT")+")</i></div></div>");
                 }
                 if (change.type === "modified") {
                     console.log("Modified messsage: ", change.doc.data());
