@@ -1,51 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <title><!doctype html>
+        <html lang="en">
+        <head>
+            <!-- Required meta tags -->
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-firestore.js"></script>
-    <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyCfOGLPFLg2O1gMwG0b6guEuy8fgCt3J0Q",
-            authDomain: "simple-vote-b24d9.firebaseapp.com",
-            databaseURL: "https://simple-vote-b24d9.firebaseio.com",
-            projectId: "simple-vote-b24d9",
-            storageBucket: "simple-vote-b24d9.appspot.com",
-            messagingSenderId: "229288893884",
-            appId: "1:229288893884:web:f11853abc834077aca5fb9"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        var db = firebase.firestore();
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+            <!-- Firebase -->
+            <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-firestore.js"></script>
+            <script>
+                var firebaseConfig = {
+                    apiKey: "AIzaSyCfOGLPFLg2O1gMwG0b6guEuy8fgCt3J0Q",
+                    authDomain: "simple-vote-b24d9.firebaseapp.com",
+                    databaseURL: "https://simple-vote-b24d9.firebaseio.com",
+                    projectId: "simple-vote-b24d9",
+                    storageBucket: "simple-vote-b24d9.appspot.com",
+                    messagingSenderId: "229288893884",
+                    appId: "1:229288893884:web:f11853abc834077aca5fb9"
+                };
+                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                var db = firebase.firestore();
 
-        function addVote() {
-            console.log("tan: " + $("#inputTan").val());
-            console.log("vote: " + $('input[name=vote]:checked').val());
-            db.collection("votes").add({
-                vote: $('input[name=vote]:checked').val(),
-                tan: $("#inputTan").val(),
-                time: new Date()
-            })
-            .then(function(docRef) {
-                console.log("Document written with ID: ", docRef.id);
-                $("#submitButton").hide();
-                $('#savedVoteModal').modal('show');
-            })
-            .catch(function(error) {
-                console.error("Error adding document: ", error);
-            });
-        }
-    </script>
+                function addVote() {
+                    console.log("tan: " + $("#inputTan").val());
+                    console.log("vote: " + $('input[name=vote]:checked').val());
+                    db.collection("votes").add({
+                        vote: $('input[name=vote]:checked').val(),
+                        tan: $("#inputTan").val(),
+                        time: new Date()
+                    })
+                        .then(function(docRef) {
+                            console.log("Document written with ID: ", docRef.id);
+                            $("#submitButton").hide();
+                            $('#savedVoteModal').modal('show');
+                        })
+                        .catch(function(error) {
+                            console.error("Error adding document: ", error);
+                        });
+                }
+            </script>
 
 
-    <title>Anonyme Abstimmung!</title>
-</head>
+            <title>Anonyme Abstimmung!</title>
+        </head>
 <body>
 <div class="container">
     <div class="row">
@@ -117,5 +121,10 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html></title>
+</head>
+<body>
+
 </body>
 </html>
