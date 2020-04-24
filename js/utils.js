@@ -17,6 +17,9 @@ class Utils {
   saveToLocalStorage(name, value) {
     localStorage.setItem(name, JSON.stringify(value));
   }
+  removeFromLocalStorage(name) {
+    localStorage.removeItem(name);
+  }
   clearLocalStorage() {
     localStorage.clear();
   }

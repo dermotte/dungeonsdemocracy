@@ -17,6 +17,39 @@ var db = firebase.firestore();
 // here goes the local data ...
 var data;
 
+// inits user/session/etc
+function init() {
+  user = utils.getUserName();
+  if (!user) {
+    // return to login
+    quit();
+    return;
+  }
+  document.querySelector("#usernamegreet").innerHTML = user;
+  getLobbySessions().then(
+    (sessions) => {
+      console.log(sessions);
+      sessionDropDown = document.querySelector("#session_dropdown");
+      html = "";
+      for (session of sessions) {
+        html += `<option value=${session.id}>${session.data.sessionID}</option>`
+      }
+      sessionDropDown.innerHTML = html;
+
+      // TODO find session for 'user'
+      // if not found enable user to join session
+
+      // start listening
+      listenToMessages();
+    });
+
+}
+
+function quit() {
+  utils.removeFromLocalStorage(lsVars.user);
+  window.location.href = 'index.html';
+}
+
 function addMessage(username, myText) {
     console.log(username + ": " + myText);
     db.collection("chat").add({
@@ -35,19 +68,27 @@ function addSession(sessionID) {
     })
 }
 
-function getLobbySessions(addToLobbyPage) {
+function getLobbySessions() {
+  return new Promise( (res, rej) => {
     db.collection("sessions").where("state", "==", "lobby")
         .get()
         .then(function(querySnapshot) {
-            addToLobbyPage(querySnapshot)
-            // querySnapshot.forEach(function(doc) {
-            //     // doc.data() is never undefined for query doc snapshots
-            //     console.log(doc.id, " => ", doc.data());
-            // });
+            sessionList = []
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+                sessionList.push({
+                    id:  doc.id,
+                    data: doc.data()
+                })
+            });
+            res(sessionList);
         })
         .catch(function(error) {
             console.log("Error getting documents: ", error);
+            rej(error);
         });
+  });
 }
 
 
