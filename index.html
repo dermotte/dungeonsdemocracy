@@ -8,43 +8,32 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-firestore.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+
     <script>
+        // Your web app's Firebase configuration
         var firebaseConfig = {
-            apiKey: "AIzaSyCfOGLPFLg2O1gMwG0b6guEuy8fgCt3J0Q",
-            authDomain: "simple-vote-b24d9.firebaseapp.com",
-            databaseURL: "https://simple-vote-b24d9.firebaseio.com",
-            projectId: "simple-vote-b24d9",
-            storageBucket: "simple-vote-b24d9.appspot.com",
-            messagingSenderId: "229288893884",
-            appId: "1:229288893884:web:f11853abc834077aca5fb9"
+            apiKey: "AIzaSyDtcPabcSL2Az1udi0sfPUykPMyb0HmhiQ",
+            authDomain: "dungeonsdemocracy.firebaseapp.com",
+            databaseURL: "https://dungeonsdemocracy.firebaseio.com",
+            projectId: "dungeonsdemocracy",
+            storageBucket: "dungeonsdemocracy.appspot.com",
+            messagingSenderId: "64547435849",
+            appId: "1:64547435849:web:589a4a4842cefbdaf61698",
+            measurementId: "G-XN89FH43FP"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
         var db = firebase.firestore();
-
-        function addVote() {
-            console.log("tan: " + $("#inputTan").val());
-            console.log("vote: " + $('input[name=vote]:checked').val());
-            db.collection("votes").add({
-                vote: $('input[name=vote]:checked').val(),
-                tan: $("#inputTan").val(),
-                time: new Date()
-            })
-            .then(function(docRef) {
-                console.log("Document written with ID: ", docRef.id);
-                $("#submitButton").hide();
-                $('#savedVoteModal').modal('show');
-            })
-            .catch(function(error) {
-                console.error("Error adding document: ", error);
-            });
-        }
     </script>
-
-
-    <title>Anonyme Abstimmung!</title>
+    <script type="application/javascript" src="js/main.js"/>
+    <title>Dungeons &amp; Democracy</title>
 </head>
 <body>
 <div class="container">
