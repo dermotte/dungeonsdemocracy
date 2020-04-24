@@ -7,87 +7,43 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- Firebase -->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-         https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-firestore.js"></script>
 
-    <script type="application/javascript" src="js/main.js"/>
+    <script type="application/javascript" src="js/main.js"></script>
     <title>Dungeons &amp; Democracy</title>
 </head>
-<body>
+<body onload="listenToMessages()">
 <div class="container">
-    <div class="row">
+    <div class="row" style="margin-top: 12pt; margin-bottom: 24pt;">
         <div class="col-sm-12">
-            <h2>Anonyme Abstimmung</h2>
+            <h1>A story about ...</h1>
         </div>
     </div>
-    <form action="javascript:;" onsubmit="addVote(this)">
+    <div class="row" id="messages">
+
+    </div>
+    <!-- chat form -->
+    <form action="javascript:;" onsubmit="addMessage('minime', $('#inputText').val())">
         <div class="form-group row">
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputText" name="inputText" placeholder="... your text goes here" required>
+            </div>
             <div class="col-sm-2">
-                Ich stimme mit ...
-            </div>
-            <div class="col-sm-10">
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="voteYes" name="vote" class="custom-control-input" value="Ja">
-                    <label class="custom-control-label" for="voteYes">Ja</label>
-                </div>
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="voteInlineNo" name="vote" class="custom-control-input" value="Nein">
-                    <label class="custom-control-label" for="voteInlineNo">Nein</label>
-                </div>
-                <div class="custom-control custom-radio">
-                    <input type="radio" id="voteInlineEnthaltung" name="vote" class="custom-control-input" value="Enthaltung" required>
-                    <label class="custom-control-label" for="voteInlineEnthaltung">Enthaltung</label>
-                </div>
+                <button type="submit" id="submitButton" class="btn btn-primary">Abschicken</button>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="inputTan"  class="col-sm-2 col-form-label">TAN</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputTan" name="inputTan" placeholder="TAN" required>
-            </div>
-        </div>
-        <div class="row">
-            <button type="submit" id="submitButton" class="btn btn-primary btn-lg btn-block">Abschicken</button>
-        </div>
+
     </form>
-    <div class="row">
-
-    </div>
 </div>
 
-<!-- -->
-<!-- Modal -->
-<div class="modal fade" id="savedVoteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ihre Stimme wurde gezählt</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Vielen Dank für die Teilnahme!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
-                <!--                  <button type="button" class="btn btn-primary">Save changes</button>-->
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>

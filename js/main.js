@@ -11,14 +11,38 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+// firebase.analytics();
 var db = firebase.firestore();
 
-function addMessage(myText) {
-    console.log("vote: " + $('input[name=vote]:checked').val());
+// here goes the local data ...
+var data;
+
+function addMessage(username, myText) {
+    console.log(username + ": " + myText);
     db.collection("chat").add({
-        vote: myText,
-        // user: username,
+        text: myText,
+        user: username,
         time: new Date()
     })
+
+    // add to local page:
+    // $("#messages").append("<div class=\"card col-sm-12 \" style=\"margin: 3pt\"><div class=\"card-body\">" + myText + " <i style='font-size: 6pt'>(" + (new Date()).toLocaleString("de-AT")+")</i></div></div>");
+}
+
+function listenToMessages() {
+    db.collection("chat")//.where("state", "==", "CA")
+        .onSnapshot(function(snapshot) {
+            snapshot.docChanges().forEach(function(change) {
+                if (change.type === "added") {
+                    console.log("New messsage: ", change.doc.data());
+                    $("#messages").append("<div class=\"card col-sm-12 \" style=\"margin: 3pt\"><div class=\"card-body\">" + change.doc.data().text + " <i style='font-size: 6pt'>(" + change.doc.data().time.toDate().toLocaleString("de-AT")+")</i></div></div>");
+                }
+                if (change.type === "modified") {
+                    console.log("Modified messsage: ", change.doc.data());
+                }
+                if (change.type === "removed") {
+                    console.log("Removed messsage: ", change.doc.data());
+                }
+            });
+        });
 }
