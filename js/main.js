@@ -72,8 +72,7 @@ function listenToMessages(sessionID) {
                 u = getUserData();
                 // if (change.doc.data().sessionID === u.sessionID) {
                 if (change.type === "added") {
-
-                    if(is_host([], getUserData().user)){
+                    if(is_host(db.collection("cities").doc(utils.getSessionID()).data().users, getUserData().user)){
 
                       // in gamecontroller.js
                       process_message(change.doc.data());
