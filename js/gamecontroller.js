@@ -10,11 +10,18 @@ const session_states = {
     highscore: "highscore"
 }
 
+// user template
 const new_user = {
     is_writer: false,
     name: "",
     score: 0,
     finished: false
+}
+
+// message template
+const new_message = {
+    text: "",
+    votes: []
 }
 
 var state = { // reflected in the session ...
@@ -25,6 +32,7 @@ var state = { // reflected in the session ...
         score: 0,
         finished: false
     }],
+    messages: [],
     // readers: [], // all - writers
     turn: 0
 }
@@ -37,6 +45,9 @@ const init_users = (users) => {
       name: user
     });
   }
+
+  // 2Do: random select writers
+  state.users[0].is_writer = true;
 }
 
 // checks if a specific user is the host
@@ -56,6 +67,11 @@ const is_host = (users, user) => {
 // public function
 const process_message = (message) => {
 
+  state.messages.push({
+    ...new_message,
+    text: message.text
+  })
+
   for(let user of state.users) {
     if (user.name == message.user) {
       user.finished = true;
@@ -69,20 +85,50 @@ const process_message = (message) => {
 
   console.log("processing message ...");
 
-  // update_users()
+  update_users();
 }
 
 // ends the current state
 const update_users = () => {
-  // if state == writing
-  // if all are finished: update_state(voting)
+
+  for(let user of state.users) {
+    if(state.game_state == session_states.writing){
+      // check writers
+      if(user.is_writer && !user.finished){
+        // at least one writer is not finished - wait for them to finish
+        return false;
+      }
+    }
+  }
 
 
-    // if state == voting
-    // if all are finished: update_state(writing)
+  console.log("everybody writed");
+  update_state(session_states.voting);
+  // show highscore?
+}
 
+const process_message_update = (message) => {
 
-    // show highscore?
+  if(state.game_state == session_states.voting){
+      // check voters
+
+      for(let m of state.messages) {
+
+        //update message in local state
+        if(m.text == message.text) {
+          m.votes = message.votes;
+        }
+
+        // check if everybody has voted
+        if(state.users.length != message.votes.length){
+          // at least one voter is not finished - wait for them to finish
+          return false;
+        }
+      }
+    }
+
+    console.log("everybody voted");
+    update_state(session_states.writing);
 }
 
 // starts a new state

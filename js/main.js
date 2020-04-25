@@ -32,10 +32,6 @@ const tpl_msg = (user, text, time) => `<div class="col-sm-12" style="margin: 3pt
 // inits user/session/etc
 async function init() {
 
-    // init controller
-    let data = await db.collection("sessions").doc(utils.getSessionID()).get();
-    init_users(data.data().users);
-
 
     userData = getUserData();
     user = userData.user;
@@ -53,6 +49,11 @@ async function init() {
     }
     document.querySelector("#usernamegreet").innerHTML = user;
     document.querySelector("#sessionname").innerHTML = sessionName;
+
+    // init controller
+    let data = await db.collection("sessions").doc(utils.getSessionID()).get();
+    init_users(data.data().users);
+
     listenToMessages(sessionID);
 }
 
@@ -76,14 +77,15 @@ function listenToMessages(sessionID) {
         .onSnapshot(function (snapshot) {
             snapshot.docChanges().forEach(async function (change) {
                 u = getUserData();
+                const data = await db.collection("sessions").doc(utils.getSessionID()).get();
+                const users = data.data().users;
                 // if (change.doc.data().sessionID === u.sessionID) {
                 if (change.type === "added") {
                     // console.log("sessions: " + JSON.stringify(db.collection("sessions")));
                     console.log("sessionID: " + utils.getSessionID());
                     // console.log("doc: " + JSON.stringify(db.collection("sessions").doc(utils.getSessionID())))
 
-                    let data = await db.collection("sessions").doc(utils.getSessionID()).get();
-                    if(is_host(data.data().users, getUserData().user)){
+                    if(is_host(users, getUserData().user)){
 
                       // in gamecontroller.js
                       process_message(change.doc.data());
@@ -102,6 +104,11 @@ function listenToMessages(sessionID) {
                 }
                 if (change.type === "modified") {
                     console.log("Modified messsage: ", change.doc.data());
+                    if(is_host(users, getUserData().user)){
+
+                      // in gamecontroller.js
+                      process_message_update(change.doc.data());
+                    }
                 }
                 if (change.type === "removed") {
                     console.log("Removed messsage: ", change.doc.data());
