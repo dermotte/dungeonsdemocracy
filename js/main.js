@@ -19,21 +19,23 @@ var data;
 
 // inits user/session/etc
 function init() {
-  user = utils.getUserName();
+  userData = getUserData();
+  user = userData.user;
   if (!user) {
     // return to login
     quit();
     return;
   }
-  sessionName = utils.getSessionName();
-  if (!sessionName) {
+  sessionID = userData.sessionID;
+  sessionName = userData.sessionName;
+  if (!sessionID) {
     // return to login
     quit();
     return;
   }
   document.querySelector("#usernamegreet").innerHTML = user;
   document.querySelector("#sessionname").innerHTML = sessionName;
-  listenToMessages();
+  listenToMessages(sessionID);
 }
 
 function quit() {
@@ -50,28 +52,29 @@ function quit() {
   );
 }
 
-function listenToMessages() {
-    db.collection("chat")//.where("sessionID", "==", "--our--session--is--from--local--storage")
+function listenToMessages(sessionID) {
+    console.log(sessionID);
+    db.collection("chat").where("sessionID", "==", sessionID)
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
                 u = getUserData();
-                if (change.doc.data().sessionID === u.sessionID) {
-                  if (change.type === "added") {
-                      console.log("New messsage: ", change.doc.data());
+                // if (change.doc.data().sessionID === u.sessionID) {
+                if (change.type === "added") {
+                    console.log("New messsage: ", change.doc.data());
 
-                        $("#messages").append("<div class=\"card col-sm-12 \" style=\"margin: 3pt\"><div class=\"card-body\">"
-                            + change.doc.data().user + ": "
-                            + change.doc.data().text + " <i style='font-size: 6pt'>("
-                            + change.doc.data().time.toDate().toLocaleString("de-AT")+")</i></div></div>");
+                      $("#messages").append("<div class=\"card col-sm-12 \" style=\"margin: 3pt\"><div class=\"card-body\">"
+                          + change.doc.data().user + ": "
+                          + change.doc.data().text + " <i style='font-size: 6pt'>("
+                          + change.doc.data().time.toDate().toLocaleString("de-AT")+")</i></div></div>");
 
-                  }
-                  if (change.type === "modified") {
-                      console.log("Modified messsage: ", change.doc.data());
-                  }
-                  if (change.type === "removed") {
-                      console.log("Removed messsage: ", change.doc.data());
-                  }
-                } // session check
+                }
+                if (change.type === "modified") {
+                    console.log("Modified messsage: ", change.doc.data());
+                }
+                if (change.type === "removed") {
+                    console.log("Removed messsage: ", change.doc.data());
+                }
+                // } // session check
             });
         });
 }

@@ -31,7 +31,8 @@ function addMessage(myText) {
         user: u.user,
         time: new Date(),
         sessionID: u.sessionID
-    })
+    });
+    $('#inputText').val("");
 }
 
 function addSession(sessionName) {
