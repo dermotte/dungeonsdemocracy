@@ -1,8 +1,8 @@
 class AiDungeon {
 
     constructor() {
-        //this.host = "https://dungeonsdemocracy.herokuapp.com";
-        this.host = "http://localhost:5000";
+        this.host = "https://dungeonsdemocracy.herokuapp.com";
+        //this.host = "http://localhost:5000";
         this.defaultEmail = "dungeonsdemocracy@gmail.com";
         this.defaultPassword = "23XvgTidFEAga6kKFJVK";
     }
@@ -31,7 +31,7 @@ class AiDungeon {
         if (!text) {
             text = "";
         }
-        // TODO instead of text, we would as well input a new context
+        // TODO instead of text, we would alternatively input a new 'context'
         let response = await axios.post(this.buildUrl("input"), {text: text});
         // this.log(response.data);
         return response.data;
