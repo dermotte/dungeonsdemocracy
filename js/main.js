@@ -17,14 +17,17 @@
 // here goes the local data ...
 var data_cache = new Array();
 
-var tpl_vote = "<div class=\"card vote-card col-sm-4\">\n" +
-    "<div class=\"card-body\">\n" +
-    "<p>@@text@@</p>\n" +
-    "<div class=\"text-center\">\n" +
-    "<a href=\"javascript:voteFor('@@docid@@')\" class=\"btn btn-success mx-auto btn-like\"><i class=\"fas fa-thumbs-up\"></i></a>\n" +
-    "</div>\n" +
-    "</div>\n" +
-    "</div>\n";
+const tpl_vote = (text, docid) => `<div class="card vote-card col-sm-4">
+    <div class="card-body">
+    <p>${text}</p>
+    <div class="text-center">
+    <a href="javascript:voteFor('${docid}')" class="btn btn-success mx-auto btn-like"><i class="fas fa-thumbs-up"></i></a>
+    </div>
+    </div>
+    </div>`;
+
+const tpl_msg = (user, text, time) => `<div class="col-sm-12" style="margin: 3pt">${user}: ${text} <i style='font-size: 6pt'>(${time})</i></div>`
+
 
 // inits user/session/etc
 function init() {
@@ -62,6 +65,7 @@ function quit() {
 }
 
 function listenToMessages(sessionID) {
+    // check with controller for game state (changes)
     console.log(sessionID);
     db.collection("chat").where("sessionID", "==", sessionID)
         .onSnapshot(function (snapshot) {
@@ -72,15 +76,12 @@ function listenToMessages(sessionID) {
                     if (change.doc.data().state != 'submission') {
                         console.log("Got text to display: ", change.doc.data());
                         // display message
-                        $("#messages").append("<div class=\"col-sm-12 \" style=\"margin: 3pt\">"
-                            + change.doc.data().user + ": "
-                            + change.doc.data().text + " <i style='font-size: 6pt'>("
-                            + change.doc.data().time.toDate().toLocaleString("de-AT") + ")</i></div>");
+                        $("#messages").append(tpl_msg(change.doc.data().user, change.doc.data().text, change.doc.data().time.toDate().toLocaleString("de-AT")));
                     } else {
                         console.log("Got text to vote: ", change.doc.data(), " - ", change.doc.id);
                         data_cache[change.doc.id] = change.doc;
                         // display vote
-                        $("#voting").append(tpl_vote.replace("@@text@@", change.doc.data().text).replace("@@docid@@", change.doc.id));
+                        $("#voting").append(tpl_vote(change.doc.data().text, change.doc.id));
                     }
                 }
                 if (change.type === "modified") {
