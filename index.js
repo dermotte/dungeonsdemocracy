@@ -13,6 +13,16 @@ let accessToken = "0222bed0-8701-11ea-ad58-87aded6b30c5";
 let headers = {"headers": {"X-Access-Token" : accessToken}};    // authentication magic
 let sessionId;
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+app.get('/', function (req, res) {
+    res.send("Hello World!");
+});
+
 app.post('/login', function (req, res) {
     res.send('TODO');
 });
