@@ -102,7 +102,7 @@ const update_users = () => {
   }
 
 
-  console.log("everybody writed");
+  console.log("everybody wrote");
   update_state(session_states.voting);
   // show highscore?
 }
@@ -131,13 +131,27 @@ const process_message_update = (message) => {
     update_state(session_states.writing);
 }
 
+const start_game = () => {
+  update_state(game_state.writing);
+}
+
 // starts a new state
-const update_state = (state) => {
+const update_state = (new_state) => {
   // set state.users[all] "finished" = false
+  for(let user of state.users){
+    user.finished = false;
+  }
 
-  // do stuff
+  state.game_state = new_state;
 
-  // set timer
+  if(new_state == game_state.writing){
+    // writing state starts
+    // 2Do: start ai message generation
+  }
+
+  // 2Do: push state to all users
+
+  // 2Do: set timer
 }
 
 // time is out
