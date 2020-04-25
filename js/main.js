@@ -30,7 +30,13 @@ const tpl_msg = (user, text, time) => `<div class="col-sm-12" style="margin: 3pt
 
 
 // inits user/session/etc
-function init() {
+async function init() {
+
+    // init controller
+    let data = await db.collection("sessions").doc(utils.getSessionID()).get();
+    init_users(data.data().users);
+
+
     userData = getUserData();
     user = userData.user;
     if (!user) {
