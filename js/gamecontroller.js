@@ -132,7 +132,7 @@ const process_message_update = (message) => {
 }
 
 const start_game = () => {
-  update_state(game_state.writing);
+  update_state(session_states.writing);
 }
 
 // starts a new state
