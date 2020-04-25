@@ -33,13 +33,7 @@ function init() {
   }
   document.querySelector("#usernamegreet").innerHTML = user;
   document.querySelector("#sessionname").innerHTML = sessionName;
-  // getLobbySessions().then(
-  //   (sessions) => {
-  //     console.log(sessions);
-  //
-  //     listenToMessages();
-  //   });
-
+  listenToMessages();
 }
 
 function quit() {
@@ -48,7 +42,7 @@ function quit() {
   sessionID = utils.getSessionID();
   removeUserFromSession(sessionID, user).then(
     () => {
-      utils.removeFromLocalStorage(lsVars.user);
+      // utils.removeFromLocalStorage(lsVars.user);
       utils.removeFromLocalStorage(lsVars.sessionID);
       utils.removeFromLocalStorage(lsVars.sessionName);
       window.location = 'index.html';
@@ -60,19 +54,24 @@ function listenToMessages() {
     db.collection("chat")//.where("sessionID", "==", "--our--session--is--from--local--storage")
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
-                if (change.type === "added") {
-                    console.log("New messsage: ", change.doc.data());
-                    $("#messages").append("<div class=\"card col-sm-12 \" style=\"margin: 3pt\"><div class=\"card-body\">"
-                        + change.doc.data().user + ": "
-                        + change.doc.data().text + " <i style='font-size: 6pt'>("
-                        + change.doc.data().time.toDate().toLocaleString("de-AT")+")</i></div></div>");
-                }
-                if (change.type === "modified") {
-                    console.log("Modified messsage: ", change.doc.data());
-                }
-                if (change.type === "removed") {
-                    console.log("Removed messsage: ", change.doc.data());
-                }
+                u = getUserData();
+                if (change.doc.data().sessionID === u.sessionID) {
+                  if (change.type === "added") {
+                      console.log("New messsage: ", change.doc.data());
+
+                        $("#messages").append("<div class=\"card col-sm-12 \" style=\"margin: 3pt\"><div class=\"card-body\">"
+                            + change.doc.data().user + ": "
+                            + change.doc.data().text + " <i style='font-size: 6pt'>("
+                            + change.doc.data().time.toDate().toLocaleString("de-AT")+")</i></div></div>");
+
+                  }
+                  if (change.type === "modified") {
+                      console.log("Modified messsage: ", change.doc.data());
+                  }
+                  if (change.type === "removed") {
+                      console.log("Removed messsage: ", change.doc.data());
+                  }
+                } // session check
             });
         });
 }

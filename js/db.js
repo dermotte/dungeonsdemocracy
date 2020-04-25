@@ -15,13 +15,22 @@ firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 
 
-function addMessage(username, myText) {
-    console.log(username + ": " + myText);
+function getUserData() {
+  return {
+    user: utils.getUserName(),
+    sessionID: utils.getSessionID(),
+    sessionName: utils.getSessionName()
+  }
+}
+
+function addMessage(myText) {
+    u = getUserData();
+    console.log(u.user + ": " + myText);
     db.collection("chat").add({
         text: myText,
-        user: username,
+        user: u.user,
         time: new Date(),
-        sessionID: "xyz"
+        sessionID: u.sessionID
     })
 }
 
