@@ -1,9 +1,16 @@
-var express = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 
-var app = express();
+const path = require('path')
+const PORT = process.env.PORT || 5000
+
+const app = new express();
 app.use(bodyParser.json());
+
+app.get('/', function(request, response){
+    response.sendFile(__dirname+'/view/welcome.html');
+});
 
 // TODO login to obtain accessToken
 // TODO does this token stay constant or does it expire after some time??
@@ -118,6 +125,6 @@ app.post('/input', function (req, res) {
 
 });
 
-app.listen(3000, function () {
+app.listen(PORT, function () {
     console.log('ioDungeonProxy listening on port 3000!');
 });
