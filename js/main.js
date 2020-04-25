@@ -40,6 +40,18 @@ function init() {
   //     listenToMessages();
   //   });
 
+  //   $("#inputText").on('keyup', function( e ){
+  //       console.log("triggered: "  +e);
+  //       if (e.which == 13) {
+  //           e.preventDefault();
+  //           txt = $('#inputText').val();
+  //
+  //           addMessage(utils.getUserName(), txt, utils.getSessionName());
+  //       }
+  //   });
+
+    // finally, start listening to messages ..
+    listenToMessages(sessionName);
 }
 
 function quit() {
@@ -56,8 +68,8 @@ function quit() {
   );
 }
 
-function listenToMessages() {
-    db.collection("chat")//.where("sessionID", "==", "--our--session--is--from--local--storage")
+function listenToMessages(sessionID) {
+    db.collection("chat").where("sessionID", "==", sessionID)
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
                 if (change.type === "added") {

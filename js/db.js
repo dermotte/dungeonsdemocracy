@@ -15,13 +15,14 @@ firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 
 
-function addMessage(username, myText) {
+function addMessage(username, myText, sessionID) {
+    $('#inputText').val('')
     console.log(username + ": " + myText);
     db.collection("chat").add({
         text: myText,
         user: username,
         time: new Date(),
-        sessionID: "xyz"
+        sessionID: sessionID
     })
 }
 
