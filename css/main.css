@@ -42,3 +42,12 @@
   background-color: #e41a1c;
   color: black;
 }
+
+.vote-card {
+  margin: 6pt;
+}
+
+.btn-like {
+  width: 160px;
+  align-content: center;
+}
