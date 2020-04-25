@@ -19,19 +19,19 @@
     <script type="text/javascript">
 
         function initStory() {
-            axios.post("http://localhost:3000/initStory", {text: ""}).then(response => {
+            axios.post("https://dungeonsdemocracy.herokuapp.com/initStory", {text: ""}).then(response => {
                 $("#content").html(response.data);
             });
         }
 
         function resumeRandomStory() {
-            axios.post("http://localhost:3000/resumeRandomStory", {text: ""}).then(response => {
+            axios.post("https://dungeonsdemocracy.herokuapp.com/resumeRandomStory", {text: ""}).then(response => {
                 $("#content").html(response.data);
             });
         }
 
         function input() {
-            axios.post("http://localhost:3000/input", {text: ""}).then(response => {
+            axios.post("https://dungeonsdemocracy.herokuapp.com/input", {text: ""}).then(response => {
                 $("#content").html(response.data);
             });
         }
