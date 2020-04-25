@@ -66,6 +66,12 @@ function quit() {
 
 function listenToMessages(sessionID) {
     // check with controller for game state (changes)
+    if(is_host([], getUserData().user)){
+
+      // in gamecontroller.js
+      process_message();
+    }
+
     console.log(sessionID);
     db.collection("chat").where("sessionID", "==", sessionID)
         .onSnapshot(function (snapshot) {
