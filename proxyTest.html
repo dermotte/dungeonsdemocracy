@@ -18,20 +18,29 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
 
+        let host = "http://localhost:5000/";
+        //let host = "https://dungeonsdemocracy.herokuapp.com/";
+
+        function login() {
+            axios.post(host + "login", {email: "dungeonsdemocracy@gmail.com", password: "23XvgTidFEAga6kKFJVK"}).then(response => {
+                $("#content").html(response.data);
+            });
+        }
+
         function initStory() {
-            axios.post("https://dungeonsdemocracy.herokuapp.com/initStory", {text: ""}).then(response => {
+            axios.post(host + "initStory").then(response => {
                 $("#content").html(response.data);
             });
         }
 
         function resumeRandomStory() {
-            axios.post("https://dungeonsdemocracy.herokuapp.com/resumeRandomStory", {text: ""}).then(response => {
+            axios.post(host + "resumeRandomStory", {text: ""}).then(response => {
                 $("#content").html(response.data);
             });
         }
 
         function input() {
-            axios.post("https://dungeonsdemocracy.herokuapp.com/input", {text: ""}).then(response => {
+            axios.post(host + "input", {text: ""}).then(response => {
                 $("#content").html(response.data);
             });
         }
@@ -45,6 +54,7 @@
 <body>
 
 <div class="container">
+    <input type="button" onclick="login();" value="Login"/>
     <input type="button" onclick="initStory();" value="New Story"/>
     <input type="button" onclick="resumeRandomStory();" value="Resume Random Story"/>
     <input type="button" onclick="input();" value="Random Storyline"/>
