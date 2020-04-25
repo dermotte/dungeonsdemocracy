@@ -40,6 +40,9 @@ const is_host = (users, user) => {
 const process_message = (message) => {
   // state.users[id].finished = true;
 
+  // message text = message.text
+  // message user = message.user
+
   // update_users()
 }
 
