@@ -23,8 +23,9 @@ function init() {
       // user is not logged in/not part of a session
       sessionDropDown = document.querySelector("#session_dropdown");
       html = "";
+      html += `<option value="new">new session ...</option>`;
       for (session of sessions) {
-        if (session.data.state === "lobby") {
+        if (session.data.game_state === "lobby") {
           html += `<option value=${session.id}>${session.data.sessionName}</option>`;
         }
         else {
@@ -48,7 +49,7 @@ function startGame() {
 }
 
 
-function login() {
+async function login() {
 
   let input = document.querySelector("#username_input");
   let info = document.querySelector("#info");
@@ -57,8 +58,15 @@ function login() {
     return false;
   }
   sessionDropDown = document.querySelector("#session_dropdown");
-  selectedSessionID = sessionDropDown.options[sessionDropDown.selectedIndex].value;
-  selectedSessionName = sessionDropDown.options[sessionDropDown.selectedIndex].innerHTML;
+  if (sessionDropDown.options[sessionDropDown.selectedIndex].value == "new")  {
+    // add new session here
+    let sessionName = generateName();
+    selectedSessionID = await addSession(sessionName);
+    selectedSessionName = sessionName;
+  } else {
+    selectedSessionID = sessionDropDown.options[sessionDropDown.selectedIndex].value;
+    selectedSessionName = sessionDropDown.options[sessionDropDown.selectedIndex].innerHTML;
+  }
   user = input.value;
   utils.saveToLocalStorage(lsVars.user, user);
   utils.saveToLocalStorage(lsVars.sessionID, selectedSessionID);
