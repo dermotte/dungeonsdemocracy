@@ -5,7 +5,9 @@
 
 // localStorage Vars stored values
 var lsVars = {
-  user : "user"
+  user : "user",
+  sessionID: "sessionID",
+  sessionName: "sessionName"
 }
 
 class Utils {
@@ -25,6 +27,12 @@ class Utils {
   }
   getUserName() {
     return this.loadFromLocalStorage(lsVars.user);
+  }
+  getSessionID() {
+    return this.loadFromLocalStorage(lsVars.sessionID);
+  }
+  getSessionName() {
+    return this.loadFromLocalStorage(lsVars.sessionName);
   }
 
 }
