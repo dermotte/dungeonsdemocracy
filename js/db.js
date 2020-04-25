@@ -30,7 +30,9 @@ function addMessage(myText) {
         text: myText,
         user: u.user,
         time: new Date(),
-        sessionID: u.sessionID
+        sessionID: u.sessionID,
+        state: "submission",
+        votes: []
     });
     $('#inputText').val("");
 }
