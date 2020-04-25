@@ -17,7 +17,7 @@ Requirements to start the demo-app:
 Setup 
 1) Checkout from the branch heroku-bot
 2) Run: ``heroku git:remote -a dungeonsdemocracy```
-3) Deploy code ```git push heroku master```
+3) Deploy code ```git push heroku heroku-bot:master```
 
 
 Requirement
