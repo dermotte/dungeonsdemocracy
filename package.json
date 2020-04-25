@@ -1,0 +1,25 @@
+{
+  "name": "aidungeonproxy",
+  "version": "1.0.0",
+  "description": "A #klujam 2020 game",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dermotte/dungeonsdemocracy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dermotte/dungeonsdemocracy/issues"
+  },
+  "homepage": "https://github.com/dermotte/dungeonsdemocracy#readme"
+}
