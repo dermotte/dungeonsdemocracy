@@ -108,7 +108,7 @@ const update_users = () => {
 }
 
 const process_message_update = (message) => {
-
+  console.log("message updated: " +  message.votes.length);
   if(state.game_state == session_states.voting){
       // check voters
 
@@ -120,7 +120,7 @@ const process_message_update = (message) => {
         }
 
         // check if everybody has voted
-        if(state.users.length != message.votes.length){
+        if(state.users.length > message.votes.length){
           // at least one voter is not finished - wait for them to finish
           return false;
         }
@@ -143,6 +143,7 @@ const update_state = (new_state) => {
   }
 
   state.game_state = new_state;
+  console.log("set state to " + new_state);
 
   if(new_state == session_states.writing){
     // writing state starts
