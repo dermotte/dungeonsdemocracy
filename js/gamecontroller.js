@@ -32,14 +32,15 @@ const is_host = (users, user) => {
     console.error("user: " + JSON.stringify(user));
     return false;
   }
-
-  return user.name == users[0].name;
+  
+  return user == users[0];
 }
 
 // public function
 const process_message = (message) => {
   // state.users[id].finished = true;
 
+  console.log("processing message ...");
   // message text = message.text
   // message user = message.user
 

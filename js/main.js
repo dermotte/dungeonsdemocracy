@@ -68,11 +68,16 @@ function listenToMessages(sessionID) {
     console.log(sessionID);
     db.collection("chat").where("sessionID", "==", sessionID)
         .onSnapshot(function (snapshot) {
-            snapshot.docChanges().forEach(function (change) {
+            snapshot.docChanges().forEach(async function (change) {
                 u = getUserData();
                 // if (change.doc.data().sessionID === u.sessionID) {
                 if (change.type === "added") {
-                    if(is_host(db.collection("sessions").doc(utils.getSessionID()).data().users, getUserData().user)){
+                    // console.log("sessions: " + JSON.stringify(db.collection("sessions")));
+                    console.log("sessionID: " + utils.getSessionID());
+                    // console.log("doc: " + JSON.stringify(db.collection("sessions").doc(utils.getSessionID())))
+
+                    let data = await db.collection("sessions").doc(utils.getSessionID()).get();
+                    if(is_host(data.data().users, getUserData().user)){
 
                       // in gamecontroller.js
                       process_message(change.doc.data());
