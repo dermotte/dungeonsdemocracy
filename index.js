@@ -1,10 +1,8 @@
 var express = require('express');
-var cors = require('cors');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 
 var app = express();
-app.use(cors());
 app.use(bodyParser.json());
 
 // TODO login to obtain accessToken
