@@ -13,11 +13,22 @@
     <script type="text/javascript" src="js/utils.js" defer></script>
     <script type="text/javascript" src="js/db.js" defer></script>
 
-    <script type="text/javascript" src="js/login.js" defer></script>
+    <script type="text/javascript" src="js/gamecontroller.js"></script>
+    <script type="text/javascript" src="js/lobby.js" defer></script>
     <title>Dungeons &amp; Democracy - Lobby</title>
 </head>
-<body>
-lobby
+<body onload="init()">
+<div id="session_info">
+  session: <span id="session_name"></span>
+</div>
+<div id="user_info">
+  You: <span id="user_name"></span>
+</div>
+<div id="session_info">
+  Users: <span id="num_users"></span>
+</div>
+<button id="start_butt" type="button" name="start" onclick="start();" disabled>Start Game</button>
+<button id="quit_butt" type="button" name="quit" onclick="quit();">Quit</button>
 
 </body>
 </html>

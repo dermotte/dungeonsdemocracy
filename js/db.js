@@ -66,6 +66,11 @@ async function addSession(sessionName) {
      */
 }
 
+async function getSession(sessionID) {
+    let session = await db.collection("sessions").doc(sessionID).get();
+    return session.data();
+}
+
 function removeUserFromSession(sessionID, user) {
   return new Promise( (res, rej) => {
     var sDocRef = db.collection("sessions").doc(sessionID);

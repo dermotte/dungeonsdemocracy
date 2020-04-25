@@ -11,7 +11,7 @@ function init() {
             if (u === user) {
 
               // return to game
-              startGame();
+              startGame(s.data.game_state);
               return;
             }
           }
@@ -44,8 +44,11 @@ function init() {
 
 }
 
-function startGame() {
-  window.location = 'game.html';
+function startGame(state) {
+  // console.log(state);
+  // return;
+  if (state === "lobby") window.location = 'lobby.html';
+  else window.location = 'game.html';
 }
 
 
@@ -72,8 +75,11 @@ async function login() {
   utils.saveToLocalStorage(lsVars.sessionID, selectedSessionID);
   utils.saveToLocalStorage(lsVars.sessionName, selectedSessionName);
   if (selectedSessionID) {
+    let session = await getSession(selectedSessionID);
     addUserToSession(selectedSessionID, user).then(
-      () => {startGame();},
+      () => {
+        startGame(session.game_state);
+      },
       () => {return false;}
     );
   }
