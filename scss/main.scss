@@ -1,0 +1,21 @@
+/* main.scss */
+
+html, body { width: 100%; height: 100%; margin: 0; }
+
+.container { background: #fff; }
+
+button { letter-spacing: .05em }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Roboto, sans-serif;
+}
+
+@import 'login';
+@import 'game';
+
+.sessions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}

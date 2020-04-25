@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Firebase -->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -16,13 +17,16 @@
 
     <title>Dungeons &amp; Democracy</title>
   </head>
-  <body onload="init()">
-    <h1>How shall we address you?</h1>
+  <body onload="init()" class="login">
 
-    <input id="username_input" type="text" placeholder="Enter a catchy name" name="uname" required autofocus>
-    <select id="session_dropdown"></select>
-    <button type="submit" onclick="login();">Join the fun</button>
+    <div class="container">
+      <h1>How shall we address you?</h1>
 
-    <p id="info"></p>
+      <input id="username_input" type="text" placeholder="Enter a catchy name" name="uname" required autofocus>
+      <select id="session_dropdown"></select>
+      <button type="submit" onclick="login();">Join the fun</button>
+
+      <p id="info"></p>
+    </div>
   </body>
 </html>
