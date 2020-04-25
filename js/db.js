@@ -15,15 +15,24 @@ firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 
 
-function addMessage(username, myText, sessionID) {
-    $('#inputText').val('')
-    console.log(username + ": " + myText);
+function getUserData() {
+  return {
+    user: utils.getUserName(),
+    sessionID: utils.getSessionID(),
+    sessionName: utils.getSessionName()
+  }
+}
+
+function addMessage(myText) {
+    u = getUserData();
+    console.log(u.user + ": " + myText);
     db.collection("chat").add({
         text: myText,
-        user: username,
+        user: u.user,
         time: new Date(),
-        sessionID: sessionID
-    })
+        sessionID: u.sessionID
+    });
+    $('#inputText').val("");
 }
 
 function addSession(sessionName) {
