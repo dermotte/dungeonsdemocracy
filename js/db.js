@@ -37,6 +37,14 @@ function addMessage(myText) {
     $('#inputText').val("");
 }
 
+function voteFor(docID) {
+    u = getUserData();
+    console.log("Voting for ", docID);
+    newVotes = data_cache[docID].data().votes;
+    newVotes.push(u.user);
+    var merger = data_cache[docID].ref.set({votes: newVotes}, {merge : true});
+}
+
 function addSession(sessionName) {
     console.log("Adding session " + sessionName);
     db.collection("sessions").add({

@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- -->
+    <link href="fontawesome/css/all.css" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Optional JavaScript -->
@@ -40,7 +42,10 @@
             <h1>A story about ...</h1>
         </div>
     </div>
-    <div class="row" id="messages" style="padding-left: 12px; padding-right: 12px">
+    <div class="row" id="messages">
+
+    </div>
+    <div class="row justify-content-center" id="voting">
 
     </div>
     <!-- chat form -->
@@ -50,7 +55,7 @@
                 <input type="text" class="form-control" id="inputText" name="inputText" placeholder="... your text goes here" required>
             </div>
             <div class="col-sm-2">
-                <button type="submit" id="submitButton" class="btn btn-primary">Send</button>
+                <button type="submit" id="submitButton" class="btn btn-primary"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
 
