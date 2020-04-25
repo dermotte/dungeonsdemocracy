@@ -144,7 +144,7 @@ const update_state = (new_state) => {
 
   state.game_state = new_state;
 
-  if(new_state == game_state.writing){
+  if(new_state == session_states.writing){
     // writing state starts
     // 2Do: start ai message generation
   }
