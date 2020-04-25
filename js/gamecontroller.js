@@ -10,6 +10,13 @@ const session_states = {
     highscore: "highscore"
 }
 
+const new_user = {
+    is_writer: false,
+    name: "",
+    score: 0,
+    finished: false
+}
+
 var state = { // reflected in the session ...
     game_state: session_states.lobby,
     users: [{
@@ -22,6 +29,16 @@ var state = { // reflected in the session ...
     turn: 0
 }
 
+const init_users = (users) => {
+  state.users = [];
+  for (let user of users) {
+    state.users.push({
+      ...new_user,
+      name: user
+    });
+  }
+}
+
 // checks if a specific user is the host
 const is_host = (users, user) => {
 
@@ -32,17 +49,25 @@ const is_host = (users, user) => {
     console.error("user: " + JSON.stringify(user));
     return false;
   }
-  
+
   return user == users[0];
 }
 
 // public function
 const process_message = (message) => {
-  // state.users[id].finished = true;
 
-  console.log("processing message ...");
+  for(let user of state.users) {
+    if (user.name == message.user) {
+      user.finished = true;
+      console.log("new state");
+      console.log(state);
+    }
+  }
+
   // message text = message.text
   // message user = message.user
+
+  console.log("processing message ...");
 
   // update_users()
 }
