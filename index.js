@@ -24,10 +24,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/', function (req, res) {
-    res.send("Hello World!");
-});
-
 app.post('/login', function (req, res) {
     res.send('TODO');
 });
