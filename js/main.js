@@ -47,7 +47,7 @@ function init() {
 
 function quit() {
   utils.removeFromLocalStorage(lsVars.user);
-  window.location.href = 'index.html';
+  window.location = 'index.html';
 }
 
 function addMessage(username, myText) {

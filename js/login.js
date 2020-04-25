@@ -4,7 +4,7 @@ function init() {
   if (user) {
     console.log(user)
     // return to game
-    window.location.href = 'game.html';
+    window.location = 'game.html';
   }
 }
 
