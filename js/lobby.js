@@ -38,6 +38,7 @@ function listentoSession(sessionID) {
     db.collection("sessions").doc(sessionID)
         .onSnapshot(function (snapshot) {
             console.log(snapshot.data());
+            num_users_field.innerHTML = snapshot.data().users.length;
             if(snapshot.data().game_state == "writing") {
               window.location = 'game.html';
             }
