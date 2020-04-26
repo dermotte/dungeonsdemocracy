@@ -126,6 +126,9 @@ function listentoState(sessionID) {
             document.querySelector("body").classList.add("state_" + snapshot.data().game_state);
 
             if(snapshot.data().game_state == "writing") {
+
+                  $('.submitMessage').removeClass("hide");
+
                   document.querySelector("#story").innerHTML = "";
                   for(let i = 1; i < snapshot.data().story.length; i++){
                     document.querySelector("#story").innerHTML += `

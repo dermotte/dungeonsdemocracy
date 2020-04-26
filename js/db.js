@@ -35,7 +35,7 @@ function addMessage(myText, isGenerated=false) {
         votes: []
     });
     $('#inputText').val("");
-    $('#submitMessage').hide();
+    $('.submitMessage').addClass("hide");
 }
 
 async function voteFor(docID) {
