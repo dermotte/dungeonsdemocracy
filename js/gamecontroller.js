@@ -99,20 +99,29 @@ const process_message = (message) => {
 const update_users = () => {
   console.log("update_users");
 
+  let writers = 1; // ai is always there
+  let users_finished = 0;
+
   for(let user of state.userList) {
     if(state.game_state == session_states.writing){
       // check writers
-      if(user.is_writer && !user.finished){
-        // at least one writer is not finished - wait for them to finish
-        return false;
+      if(user.is_writer)
+      {
+        writers++;
+
+        if(user.finished){
+          users_finished ++;
+        }
       }
     }
   }
 
-
-  console.log("everybody wrote");
-  update_state(session_states.voting);
-  // show highscore?
+  if(users_finished == writers){
+    console.log("everybody wrote");
+    update_state(session_states.voting);
+    
+    // show highscore?
+  }
 }
 
 const process_message_update = (message) => {
