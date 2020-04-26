@@ -117,9 +117,11 @@ function listentoState(sessionID) {
             document.querySelector("body").classList.add("state_" + snapshot.data().game_state);
 
             document.querySelector("body").classList.remove("is_writer");
-            for(let user of snapshot.data().userList) {
-              if(user.name == u.user && user.is_writer){
-                document.querySelector("body").classList.add("is_writer");
+            if(snapshot.data().userList) {
+              for(let user of snapshot.data().userList) {
+                if(user.name == u.user && user.is_writer){
+                  document.querySelector("body").classList.add("is_writer");
+                }
               }
             }
           });
