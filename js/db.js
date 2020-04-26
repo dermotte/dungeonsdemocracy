@@ -23,12 +23,12 @@ function getUserData() {
   }
 }
 
-function addMessage(myText) {
+function addMessage(myText, isGenerated=false) {
     u = getUserData();
     console.log(u.user + ": " + myText);
     db.collection("chat").add({
         text: myText,
-        user: u.user,
+        user: isGenerated ? "AI" : u.user,
         time: new Date(),
         sessionID: u.sessionID,
         state: "submission",

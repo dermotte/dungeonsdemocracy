@@ -192,6 +192,17 @@ function assignWriters() {
     state.userList[first].is_writer = true;
     state.userList[second].is_writer = true;
 
+    // check if the last "winner" was AI-generated or from a human player
+    // in the latter case, assign it to input
+    let input = null;
+    let latestMsg = state.story[state.story.length-1];
+    if (latestMsg.user != "init" && latestMsg.user != "AI") {
+        input = latestMsg.text;
+    }
+    aiDungeon.generate(input).then(AI_Message => {
+        addMessage(AI_Message, true);
+    });
+
 }
 
 function shuffle(array) {
