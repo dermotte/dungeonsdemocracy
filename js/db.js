@@ -45,7 +45,7 @@ async function voteFor(docID) {
     newVotes.push(u.user);
     var merger = data_cache[docID].ref.set({votes: newVotes}, {merge : true});
 
-    document.querySelector(".btn-like").style.display = "none";
+    document.querySelectorAll(".btn-like").style.display = "none";
 }
 
 async function addSession(sessionName) {
