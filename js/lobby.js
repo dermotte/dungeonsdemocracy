@@ -43,6 +43,6 @@ function listentoSession(sessionID) {
             if(snapshot.data().game_state == "writing") {
               window.location = 'game.html';
             }
-
+            update_display();
         });
 }
