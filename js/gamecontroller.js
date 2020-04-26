@@ -118,9 +118,12 @@ const update_users = () => {
 const process_message_update = (message) => {
   console.log("process_message_update");
   console.log("message updated: " +  message.votes.length);
+
+
   if(state.game_state == session_states.voting){
       // check voters
 
+      let user_votes = 0;
       for(let m of state.messages) {
 
         //update message in local state
@@ -128,11 +131,13 @@ const process_message_update = (message) => {
           m.votes = m.votes.concat(message.votes);
         }
 
-        // check if everybody has voted
-        if(state.userList.length > m.votes.length){
-          // at least one voter is not finished - wait for them to finish
-          return false;
-        }
+        user_votes += m.votes.length;
+      }
+
+      // check if everybody has voted
+      if(state.userList.length > user_votes){
+        // at least one voter is not finished - wait for them to finish
+        return false;
       }
     }
 
