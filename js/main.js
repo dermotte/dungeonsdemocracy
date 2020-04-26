@@ -115,6 +115,9 @@ function listentoState(sessionID) {
     console.log(sessionID);
       db.collection("sessions").doc(sessionID)
           .onSnapshot(function (snapshot) {
+
+            $("#initStory").html(snapshot.data().story[0].text);
+
             u = getUserData();
             console.log(snapshot.data());
             document.querySelector("body").classList.remove("state_writing");

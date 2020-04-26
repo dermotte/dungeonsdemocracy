@@ -33,10 +33,15 @@ var state = state ? state : { // reflected in the session ...
         finished: false
     }],
     messages: [],
+    story: [], // {text, user}
     // readers: [], // all - writers
-    turn: 0
+    turn: 0,
+    writers_sequence: [],
+    current_writer: 0
 }
 
+
+// is called by every user
 const init_users = (users) => {
   console.log("init_users");
   state.userList = [];
@@ -46,9 +51,6 @@ const init_users = (users) => {
       name: user
     });
   }
-
-  // 2Do: random select writers
-  state.userList[0].is_writer = true;
 }
 
 // checks if a specific user is the host
@@ -133,12 +135,64 @@ const process_message_update = (message) => {
     }
 
     console.log("everybody voted");
+
+    // TODO winner feststellen, score erhöhen, zu story hinzufügen
+    assignWriters();
+
     update_state(session_states.writing);
 }
 
-const start_game = (sessionID) => {
+function assignWriters() {
+    let first = state.writers_sequence[state.current_writer++ % state.writers_sequence.length]
+    let second = state.writers_sequence[state.current_writer++ % state.writers_sequence.length]
+
+    state.userList.forEach(u => u.is_writer = false);
+    state.userList[first].is_writer = true;
+    state.userList[second].is_writer = true;
+
+}
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+// only host starts game, so we initialize all the important stuff like
+// * init random sequence
+const start_game = async (sessionID) => {
     console.log("start_game");
-  return update_state(session_states.writing);
+
+    // TODO already generate initial message in lobby
+    // generate start message and write to state
+    let message = await aiDungeon.initStory();
+    state.story.push({text: message, user: "init"});
+
+    // ---< initialize random writers sequence >---
+    // random select writers
+    state.writers_sequence = new Array();
+    for (let i=0; i < state.userList.length; i++) {
+      state.writers_sequence.push(i);
+    }
+    // list shuffle
+    shuffle(state.writers_sequence);
+    state.current_writer = 0;
+    assignWriters();
+
+    return update_state(session_states.writing);
 }
 
 // starts a new state
@@ -160,8 +214,6 @@ const update_state = (new_state) => {
     }
 
     await db.collection("sessions").doc(utils.getSessionID()).update(state);
-
-    // 2Do: push state to all users
 
     // 2Do: set timer
     res();

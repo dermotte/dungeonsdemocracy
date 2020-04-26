@@ -30,7 +30,7 @@ function update_display(session) {
 
 async function start() {
   sessionID = utils.getSessionID();
-  await start_game(sessionID);
+  await update_state(session_states.writing);
 }
 
 function listentoSession(sessionID) {
