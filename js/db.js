@@ -34,8 +34,11 @@ function addMessage(myText, isGenerated=false) {
         state: "submission",
         votes: []
     });
-    $('#inputText').val("");
-    $('.submitMessage').addClass("hide");
+    if(!isGenerated)
+    {
+      $('#inputText').val("");
+      $('.submitMessage').addClass("hide")
+    }
 }
 
 async function voteFor(docID) {

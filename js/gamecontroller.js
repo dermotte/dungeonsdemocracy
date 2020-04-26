@@ -38,7 +38,8 @@ var state = state ? state : { // reflected in the session ...
     // readers: [], // all - writers
     turn: 0,
     writers_sequence: [],
-    current_writer: 0
+    current_writer: 0,
+    ai_finished: false
 }
 
 
@@ -80,6 +81,11 @@ const process_message = (message) => {
   })
 
   for(let user of state.userList) {
+
+    if(message.user == "AI") {
+      state.ai_finished = true;
+    }
+
     if (user.name == message.user) {
       user.finished = true;
       console.log("new state");
@@ -102,6 +108,10 @@ const update_users = () => {
   let writers = 1; // ai is always there
   let users_finished = 0;
 
+  if(state.ai_finished){
+    users_finished++;
+  }
+
   for(let user of state.userList) {
     if(state.game_state == session_states.writing){
       // check writers
@@ -121,6 +131,7 @@ const update_users = () => {
 
   if(users_finished == writers){
     console.log("everybody wrote");
+    state.ai_finished = false;
     update_state(session_states.voting);
 
     // show highscore?
