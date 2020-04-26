@@ -59,7 +59,7 @@ function updateUserScoreList(users) {
   scoreList = document.querySelector(".userScoreList");
   html = "";
   for (u in users) {
-    console.log(u.users);
+    console.log(u);
     html += `<span>${u.name} (${u.score})</span>`;
   }
   scoreList.innerHTML = html;
