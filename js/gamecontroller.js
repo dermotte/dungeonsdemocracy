@@ -149,7 +149,7 @@ const process_message_update = (message) => {
       assingWinner();
 
       state.messages = [];
-      // todo: remove all "submission states" from messages
+      // remove all "submission states" from messages
       db.collection("chat").where("sessionID", "==", sessionID)
           .onSnapshot(function (snapshot) {
               snapshot.docChanges().forEach(async function (change) {
@@ -181,7 +181,7 @@ function assingWinner() {
     }
   }
 
-  state.story.push({text: message, user: user});
+  state.story.push({text: message, user: winner});
 }
 
 function assignWriters() {
