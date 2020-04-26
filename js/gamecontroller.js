@@ -125,7 +125,7 @@ const process_message_update = (message) => {
         }
 
         // check if everybody has voted
-        if(state.userList.length > message.votes.length){
+        if(state.userList.length > m.votes.length){
           // at least one voter is not finished - wait for them to finish
           return false;
         }
