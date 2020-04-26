@@ -131,28 +131,37 @@ const process_message_update = (message) => {
     update_state(session_states.writing);
 }
 
-const start_game = () => {
-  update_state(session_states.writing);
+const start_game = (sessionID) => {
+  return update_state(session_states.writing);
 }
 
 // starts a new state
 const update_state = (new_state) => {
-  // set state.users[all] "finished" = false
-  for(let user of state.users){
-    user.finished = false;
-  }
+  return new Promise( async (res, rej) => {
 
-  state.game_state = new_state;
-  console.log("set state to " + new_state);
+    // set state.users[all] "finished" = false
+    for (let user of state.users) {
+      user.finished = false;
+    }
 
-  if(new_state == session_states.writing){
-    // writing state starts
-    // 2Do: start ai message generation
-  }
+    state.game_state = new_state;
+    console.log("set state to " + new_state);
 
-  // 2Do: push state to all users
+    if (new_state == session_states.writing) {
+      // writing state starts
+      // 2Do: start ai message generation
+    }
 
-  // 2Do: set timer
+    const new_game_state = {
+      game_state: session_states.writing
+    };
+    await db.collection("sessions").doc(sessionID).update(new_game_state);
+
+    // 2Do: push state to all users
+
+    // 2Do: set timer
+    res();
+  });
 }
 
 // time is out

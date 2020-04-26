@@ -135,9 +135,9 @@ function addUserToSession(sessionID, user) {
   });
 }
 
-function getLobbySessions() {
+function getSessions() {
   return new Promise( (res, rej) => {
-    db.collection("sessions").where("game_state", "==", "lobby")
+    db.collection("sessions")
         .get()
         .then(function(querySnapshot) {
             sessionList = []
@@ -164,6 +164,23 @@ function capFirst(string) {
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function quit() {
+    user = utils.getUserName();
+    sessionName = utils.getSessionName();
+    sessionID = utils.getSessionID();
+    removeUserFromSession(sessionID, user).then(
+        () => {
+            // utils.removeFromLocalStorage(lsVars.user);
+            utils.removeFromLocalStorage(lsVars.sessionID);
+            utils.removeFromLocalStorage(lsVars.sessionName);
+            window.location = 'index.html';
+        },
+        () => {
+            console.log("Remove failed!");
+        }
+    );
 }
 
 function generateName(){
