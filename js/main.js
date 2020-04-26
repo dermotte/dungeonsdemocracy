@@ -55,12 +55,15 @@ async function init() {
     listentoState(sessionID);
 }
 
-function updateUserScoreList(users) {
+async function updateUserScoreList() {
+  let data = await db.collection("sessions").doc(utils.getSessionID()).get();
+  let users = data.data().userList;
+
   scoreList = document.querySelector(".userScoreList");
   html = "";
   for (u of users) {
     console.log(u);
-    html += `<span>${u.name} (${u.score})</span>`;
+    html += `<span>${u.name} (${u.score}) </span>`;
   }
   scoreList.innerHTML = html;
 }
