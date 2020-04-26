@@ -36,24 +36,15 @@ async function init() {
 
     userData = getUserData();
     user = userData.user;
-    if (!user) {
-        // return to login
-        quit();
-        return;
-    }
     sessionID = userData.sessionID;
     sessionName = userData.sessionName;
-    if (!sessionID) {
-        // return to login
-        quit();
-        return;
-    }
     document.querySelector("#usernamegreet").innerHTML = user;
     document.querySelector("#sessionname").innerHTML = sessionName;
 
     // init controller
     let data = await db.collection("sessions").doc(utils.getSessionID()).get();
     init_users(data.data().users);
+    updateUserScoreList();
 
     if(is_host(data.data().users, getUserData().user)){
       sessionID = utils.getSessionID();
@@ -62,6 +53,12 @@ async function init() {
 
     listenToMessages(sessionID);
     listentoState(sessionID);
+}
+
+function updateUserScoreList(users) {
+  for (u in users) {
+    console.log(u);
+  }
 }
 
 function listenToMessages(sessionID) {
