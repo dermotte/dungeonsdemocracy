@@ -44,7 +44,7 @@ async function init() {
     // init controller
     let data = await db.collection("sessions").doc(utils.getSessionID()).get();
     init_users(data.data().users);
-    updateUserScoreList();
+    // updateUserScoreList(data.data().userList);
 
     if(is_host(data.data().users, getUserData().user)){
       sessionID = utils.getSessionID();
@@ -56,9 +56,13 @@ async function init() {
 }
 
 function updateUserScoreList(users) {
+  scoreList = document.querySelector("#userScoreList");
+  html = "";
   for (u in users) {
-    console.log(u);
+    console.log(u.users);
+    html += `<span>${u.name} (${u.score})</span>`;
   }
+  scoreList.innerHTML = html;
 }
 
 function listenToMessages(sessionID) {
