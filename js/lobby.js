@@ -16,13 +16,14 @@ async function init() {
 
 function update_display(session) {
   userData = getUserData();
-  host = is_host(session.users, userData.user) ? "(host)": "";
+  let i_am_host = is_host(session.users, userData.user);
+  host = i_am_host ? "(host)": "";
   num_users = session.users.length;
   document.querySelector("#session_name").innerHTML = userData.sessionName;
   document.querySelector("#user_name").innerHTML = userData.user + ` ${host}`;
   document.querySelector("#num_users").innerHTML = num_users;
   butt = document.querySelector("#start_butt");
-  if (num_users >= MIN_USERS) {
+  if (num_users >= MIN_USERS && i_am_host) {
     butt.disabled = false;
   }
 }
