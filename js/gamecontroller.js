@@ -145,9 +145,18 @@ const process_message_update = (message) => {
 
       console.log("everybody voted");
 
+
       assingWinner();
 
       state.messages = [];
+      // todo: remove all "submission states" from messages
+      db.collection("chat").where("sessionID", "==", sessionID)
+          .onSnapshot(function (snapshot) {
+              snapshot.docChanges().forEach(async function (change) {
+                  var merger = change.set({state: "handled"}, {merge : true});
+              })
+          });
+
       assignWriters();
 
       update_state(session_states.writing);
