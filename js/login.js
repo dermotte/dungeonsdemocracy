@@ -1,5 +1,5 @@
 function init() {
-  getLobbySessions().then(
+  getSessions().then(
     (sessions) => {
       console.log(sessions);
       // check if user already logged in
@@ -45,7 +45,7 @@ function init() {
 }
 
 function startGame(state) {
-  // console.log(state);
+  console.log(state);
   // return;
   if (state === "lobby") window.location = 'lobby.html';
   else window.location = 'game.html';

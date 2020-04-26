@@ -57,20 +57,6 @@ async function init() {
     listenToMessages(sessionID);
 }
 
-function quit() {
-    user = utils.getUserName();
-    sessionName = utils.getSessionName();
-    sessionID = utils.getSessionID();
-    removeUserFromSession(sessionID, user).then(
-        () => {
-            // utils.removeFromLocalStorage(lsVars.user);
-            utils.removeFromLocalStorage(lsVars.sessionID);
-            utils.removeFromLocalStorage(lsVars.sessionName);
-            window.location = 'index.html';
-        }
-    );
-}
-
 function listenToMessages(sessionID) {
     console.log(sessionID);
     db.collection("chat").where("sessionID", "==", sessionID)

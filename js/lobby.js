@@ -36,26 +36,11 @@ function update_display(session) {
   }
 }
 
-function start() {
-  start_game();
+async function start() {
+  sessionID = utils.getSessionID();
+  await start_game(sessionID);
   window.location = 'game.html';
 }
-
-function quit() {
-    user = utils.getUserName();
-    sessionName = utils.getSessionName();
-    sessionID = utils.getSessionID();
-    // console.log(sessionID);
-    removeUserFromSession(sessionID, user).then(
-        () => {
-            // utils.removeFromLocalStorage(lsVars.user);
-            utils.removeFromLocalStorage(lsVars.sessionID);
-            utils.removeFromLocalStorage(lsVars.sessionName);
-            window.location = 'index.html';
-        }
-    );
-}
-
 
 function listentoSession(sessionID) {
     console.log(sessionID);
