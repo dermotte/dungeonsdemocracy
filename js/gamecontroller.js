@@ -195,12 +195,18 @@ function assignWriters() {
     // check if the last "winner" was AI-generated or from a human player
     // in the latter case, assign it to input
     let input = null;
-    let latestMsg = state.story[state.story.length-1];
-    if (latestMsg.user != "init" && latestMsg.user != "AI") {
-        input = latestMsg.text;
+    if (state.story.length > 1) {
+        let latestMsg = state.story[state.story.length-1];
+        if (latestMsg.user != "init" && latestMsg.user != "AI") {
+            input = latestMsg.text;
+        }
     }
     aiDungeon.generate(input).then(AI_Message => {
-        addMessage(AI_Message, true);
+        // randomly wait 10-20 seconds
+        let delay = 10000 + Math.random() * 10000;
+        setTimeout(() => {
+            addMessage(AI_Message, true);
+        }, delay);
     });
 
 }
