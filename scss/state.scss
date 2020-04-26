@@ -1,0 +1,7 @@
+body.state_writing input {
+    display: none;
+}
+
+body.state_writing.is_writer input {
+    display: block;
+}

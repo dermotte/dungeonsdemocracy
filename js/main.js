@@ -55,6 +55,7 @@ async function init() {
     init_users(data.data().users);
 
     listenToMessages(sessionID);
+    listentoState(sessionID);
 }
 
 function listenToMessages(sessionID) {
@@ -102,4 +103,24 @@ function listenToMessages(sessionID) {
                 // } // session check
             });
         });
+}
+
+
+function listentoState(sessionID) {
+    console.log(sessionID);
+      db.collection("sessions").doc(sessionID)
+          .onSnapshot(function (snapshot) {
+            u = getUserData();
+            console.log(snapshot.data());
+            document.querySelector("body").classList.remove("state_writing");
+            document.querySelector("body").classList.remove("state_voting");
+            document.querySelector("body").classList.add("state_" + snapshot.data().game_state);
+
+            document.querySelector("body").classList.remove("is_writer");
+            for(let user of snapshot.data().userList) {
+              if(user.name == u.user && user.is_writer){
+                document.querySelector("body").classList.add("is_writer");
+              }
+            }
+          });
 }

@@ -26,7 +26,7 @@ const new_message = {
 
 var state = { // reflected in the session ...
     game_state: session_states.lobby,
-    users: [{
+    userList: [{
         is_writer: false,
         name: "",
         score: 0,
@@ -38,16 +38,16 @@ var state = { // reflected in the session ...
 }
 
 const init_users = (users) => {
-  state.users = [];
+  state.userList = [];
   for (let user of users) {
-    state.users.push({
+    state.userList.push({
       ...new_user,
       name: user
     });
   }
 
   // 2Do: random select writers
-  state.users[0].is_writer = true;
+  state.userList[0].is_writer = true;
 }
 
 // checks if a specific user is the host
@@ -72,7 +72,7 @@ const process_message = (message) => {
     text: message.text
   })
 
-  for(let user of state.users) {
+  for(let user of state.userList) {
     if (user.name == message.user) {
       user.finished = true;
       console.log("new state");
@@ -91,7 +91,7 @@ const process_message = (message) => {
 // ends the current state
 const update_users = () => {
 
-  for(let user of state.users) {
+  for(let user of state.userList) {
     if(state.game_state == session_states.writing){
       // check writers
       if(user.is_writer && !user.finished){
@@ -120,7 +120,7 @@ const process_message_update = (message) => {
         }
 
         // check if everybody has voted
-        if(state.users.length > message.votes.length){
+        if(state.userList.length > message.votes.length){
           // at least one voter is not finished - wait for them to finish
           return false;
         }
@@ -139,8 +139,8 @@ const start_game = (sessionID) => {
 const update_state = (new_state) => {
   return new Promise( async (res, rej) => {
 
-    // set state.users[all] "finished" = false
-    for (let user of state.users) {
+    // set state.userList[all] "finished" = false
+    for (let user of state.userList) {
       user.finished = false;
     }
 
@@ -152,10 +152,7 @@ const update_state = (new_state) => {
       // 2Do: start ai message generation
     }
 
-    const new_game_state = {
-      game_state: session_states.writing
-    };
-    await db.collection("sessions").doc(sessionID).update(new_game_state);
+    await db.collection("sessions").doc(sessionID).update(state);
 
     // 2Do: push state to all users
 
@@ -167,7 +164,7 @@ const update_state = (new_state) => {
 // time is out
 // ends current state and starts a new one
 const timeout = () => {
-  // set state.users[all] "finished" = true
+  // set state.userList[all] "finished" = true
 
   // update_users()
 }
