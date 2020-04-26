@@ -125,9 +125,20 @@ function listentoState(sessionID) {
             document.querySelector("body").classList.remove("state_voting");
             document.querySelector("body").classList.add("state_" + snapshot.data().game_state);
 
+            if(snapshot.data().game_state == "writing") {
+                  document.querySelector("#story").innerHTML = "";
+                  for(let i = 1; i < snapshot.data().story.length; i++){
+                    document.querySelector("#story").innerHTML += `
+                      <span class="user">${snapshot.data().story[i].user}</span><br>
+                      <span class="text">${snapshot.data().story[i].text}</span>`
+                    ;
+                  }
+            }
+
             if(snapshot.data().game_state == "voting") {
                   document.querySelectorAll(".btn-like").forEach((button) => { button.style.display = "block"; });
             }
+
 
             document.querySelector("body").classList.remove("is_writer");
             if(snapshot.data().userList) {

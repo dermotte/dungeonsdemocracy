@@ -21,7 +21,8 @@ const new_user = {
 // message template
 const new_message = {
     text: "",
-    votes: []
+    votes: [],
+    user: ""
 }
 
 var state = state ? state : { // reflected in the session ...
@@ -74,7 +75,8 @@ const process_message = (message) => {
 
   state.messages.push({
     ...new_message,
-    text: message.text
+    text: message.text,
+    user: message.user
   })
 
   for(let user of state.userList) {
@@ -136,10 +138,31 @@ const process_message_update = (message) => {
 
     console.log("everybody voted");
 
-    // TODO winner feststellen, score erhöhen, zu story hinzufügen
+    assingWinner();
     assignWriters();
 
     update_state(session_states.writing);
+}
+
+function assingWinner() {
+  let winner;
+  let message;
+  let vote_count = 0;
+  for(let m of state.messages) {
+    if(m.votes.length > vote_count){
+      vote_count = m.votes.length;
+      winner = m.user;
+      message = m.text;
+    }
+  }
+
+  for (let user of state.userList){
+    if(user.name == winner) {
+      user.score ++;
+    }
+  }
+
+  state.story.push({text: message, user: user});
 }
 
 function assignWriters() {
