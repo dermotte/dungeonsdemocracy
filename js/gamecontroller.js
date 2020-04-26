@@ -128,7 +128,7 @@ const process_message_update = (message) => {
 
         //update message in local state
         if(m.text == message.text) {
-          m.votes = union_arrays(message.votes, m.votes);
+          m.votes = Array.from(new Set(message.votes.concat(m.votes)));
           console.log("message " + m.text + " | has now " + m.votes.length);
         }
 
