@@ -128,7 +128,9 @@ function listentoState(sessionID) {
             if(snapshot.data().game_state == "writing") {
                   document.querySelector("#story").innerHTML = "";
                   for(let i = 1; i < snapshot.data().story.length; i++){
-                    document.querySelector("#story").innerHTML += `<div class="col-sm-10">${snapshot.data().story[i].text}</div><div class="col-sm-2">${snapshot.data().story[i].user}</div>`
+                    document.querySelector("#story").innerHTML += `
+                        <div class="col-sm-10">${snapshot.data().story[i].text}</div>
+                        <div class="col-sm-2">${snapshot.data().story[i].user}</div>`
                     ;
                   }
                 $("#voting").html('');
