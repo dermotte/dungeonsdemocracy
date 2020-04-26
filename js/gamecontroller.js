@@ -121,7 +121,7 @@ const process_message_update = (message) => {
 
         //update message in local state
         if(m.text == message.text) {
-          m.votes = message.votes;
+          m.votes = m.votes.concat(message.votes);
         }
 
         // check if everybody has voted
