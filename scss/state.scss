@@ -6,7 +6,7 @@ body .submitMessage {
     display: none;
 }
 
-body.state_writing.is_writer .submitMessage {
+body.state_writing.is_writer .submitMessage:not(.hide) {
     display: block;
 }
 
