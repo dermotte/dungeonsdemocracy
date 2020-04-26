@@ -58,7 +58,7 @@ async function init() {
 function updateUserScoreList(users) {
   scoreList = document.querySelector(".userScoreList");
   html = "";
-  for (u in users) {
+  for (u of users) {
     console.log(u);
     html += `<span>${u.name} (${u.score})</span>`;
   }
