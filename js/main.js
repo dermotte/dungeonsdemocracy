@@ -133,6 +133,7 @@ function listentoState(sessionID) {
                       <span class="text">${snapshot.data().story[i].text}</span>`
                     ;
                   }
+                $("#voting").html('');
             }
 
             if(snapshot.data().game_state == "voting") {
