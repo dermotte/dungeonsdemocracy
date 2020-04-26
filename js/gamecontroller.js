@@ -38,6 +38,7 @@ var state = { // reflected in the session ...
 }
 
 const init_users = (users) => {
+  console.log("init_users");
   state.userList = [];
   for (let user of users) {
     state.userList.push({
@@ -52,6 +53,7 @@ const init_users = (users) => {
 
 // checks if a specific user is the host
 const is_host = (users, user) => {
+  console.log("is_host");
 
   // users array not set
   if(!users || !user || !users.length) {
@@ -66,6 +68,7 @@ const is_host = (users, user) => {
 
 // public function
 const process_message = (message) => {
+  console.log("process_message");
 
   state.messages.push({
     ...new_message,
@@ -90,6 +93,7 @@ const process_message = (message) => {
 
 // ends the current state
 const update_users = () => {
+  console.log("update_users");
 
   for(let user of state.userList) {
     if(state.game_state == session_states.writing){
@@ -108,6 +112,7 @@ const update_users = () => {
 }
 
 const process_message_update = (message) => {
+  console.log("process_message_update");
   console.log("message updated: " +  message.votes.length);
   if(state.game_state == session_states.voting){
       // check voters
@@ -132,11 +137,13 @@ const process_message_update = (message) => {
 }
 
 const start_game = (sessionID) => {
+    console.log("start_game");
   return update_state(session_states.writing);
 }
 
 // starts a new state
 const update_state = (new_state) => {
+    console.log("update_state");
   return new Promise( async (res, rej) => {
 
     // set state.userList[all] "finished" = false
@@ -164,6 +171,7 @@ const update_state = (new_state) => {
 // time is out
 // ends current state and starts a new one
 const timeout = () => {
+    console.log("timeout");
   // set state.userList[all] "finished" = true
 
   // update_users()
