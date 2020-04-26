@@ -31,7 +31,8 @@ function init() {
           html += `<option value=${session.id}>${session.data.sessionName}</option>`;
         }
         else {
-          html += `<option value=${session.id} disabled>${session.data.sessionName}</option>`;
+          // dont show running sessions
+          // html += `<option value=${session.id} disabled>${session.data.sessionName}</option>`;
         }
       }
       sessionDropDown.innerHTML = html;
