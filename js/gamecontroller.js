@@ -55,7 +55,7 @@ const init_users = (users) => {
 
 // checks if a specific user is the host
 const is_host = (users, user) => {
-  console.log("is_host");
+  // console.log("is_host");
 
   // users array not set
   if(!users || !user || !users.length) {

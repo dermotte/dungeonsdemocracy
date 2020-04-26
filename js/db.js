@@ -37,10 +37,11 @@ function addMessage(myText) {
     $('#inputText').val("");
 }
 
-function voteFor(docID) {
+async function voteFor(docID) {
     u = getUserData();
     console.log("Voting for ", docID);
-    newVotes = data_cache[docID].data().votes;
+    doc = await data_cache[docID].ref.get();
+    newVotes = doc.data().votes;
     newVotes.push(u.user);
     var merger = data_cache[docID].ref.set({votes: newVotes}, {merge : true});
 }

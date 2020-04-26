@@ -17,6 +17,7 @@
 // here goes the local data ...
 var data_cache = new Array();
 
+// add style="display: none" to tpl_vote
 const tpl_vote = (text, docid) => `<div class="card vote-card col-sm-4">
     <div class="card-body">
     <p>${text}</p>
@@ -79,10 +80,10 @@ function listenToMessages(sessionID) {
 
                     if(is_host(users, getUserData().user)){
 
-                      // in gamecontroller.js
+                      // handling new messages explicitely as host in the gamecontroller.js
                       process_message(change.doc.data());
                     }
-
+                    // everybody does that:
                     if (change.doc.data().state != 'submission') {
                         console.log("Got text to display: ", change.doc.data());
                         // display message
