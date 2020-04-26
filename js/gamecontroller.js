@@ -128,25 +128,42 @@ const process_message_update = (message) => {
 
         //update message in local state
         if(m.text == message.text) {
-          m.votes = m.votes.concat(message.votes);
+          m.votes = union_arrays(message.votes, m.votes);
+          console.log("message " + m.text + " | has now " + m.votes.length);
         }
 
         user_votes += m.votes.length;
       }
+
+      console.log("votes: " + user_votes);
 
       // check if everybody has voted
       if(state.userList.length > user_votes){
         // at least one voter is not finished - wait for them to finish
         return false;
       }
+
+      console.log("everybody voted");
+
+      assingWinner();
+      assignWriters();
+
+      update_state(session_states.writing);
     }
+}
 
-    console.log("everybody voted");
-
-    assingWinner();
-    assignWriters();
-
-    update_state(session_states.writing);
+function union_arrays (x, y) {
+  var obj = {};
+  for (var i = x.length-1; i >= 0; -- i)
+     obj[x[i]] = x[i];
+  for (var i = y.length-1; i >= 0; -- i)
+     obj[y[i]] = y[i];
+  var res = []
+  for (var k in obj) {
+    if (obj.hasOwnProperty(k))  // <-- optional
+      res.push(obj[k]);
+  }
+  return res;
 }
 
 function assingWinner() {
