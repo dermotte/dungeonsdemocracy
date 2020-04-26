@@ -30,7 +30,6 @@ function update_display(session) {
 async function start() {
   sessionID = utils.getSessionID();
   await start_game(sessionID);
-  // window.location = 'game.html';
 }
 
 function listentoSession(sessionID) {
@@ -38,8 +37,10 @@ function listentoSession(sessionID) {
     num_users_field = document.querySelector("#num_users");
     db.collection("sessions").doc(sessionID)
         .onSnapshot(function (snapshot) {
-                u = getUserData();
-                console.log(snapshot.data());
+            console.log(snapshot.data());
+            if(snapshot.data().game_state == "writing") {
+              window.location = 'game.html';
+            }
 
         });
 }
