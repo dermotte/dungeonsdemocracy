@@ -201,6 +201,7 @@ function assignWriters() {
             input = latestMsg.text;
         }
     }
+    console.log("AI input: " + input);
     aiDungeon.generate(input).then(AI_Message => {
         // randomly wait 10-20 seconds
         let delay = 10000 + Math.random() * 10000;
