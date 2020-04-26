@@ -152,7 +152,7 @@ const update_state = (new_state) => {
       // 2Do: start ai message generation
     }
 
-    await db.collection("sessions").doc(sessionID).update(state);
+    await db.collection("sessions").doc(utils.getSessionID()).update(state);
 
     // 2Do: push state to all users
 
