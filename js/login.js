@@ -1,9 +1,12 @@
 function init() {
+  // check if user already logged in
+  user = utils.getUserName();
+  // username exists, fill in username
+  document.querySelector("#username_input").value = user;
+
   getSessions().then(
     (sessions) => {
       console.log(sessions);
-      // check if user already logged in
-      user = utils.getUserName();
       if (user) {
         for (s of sessions) {
           for (u of s.data.users) {
@@ -11,13 +14,12 @@ function init() {
             if (u === user) {
 
               // return to game
-              startGame(s.data.game_state);
+              startGame(s.id);
               return;
             }
           }
         }
-        // username exists but no session, fill in username
-        document.querySelector("#username_input").value = user;
+
       }
 
       // user is not logged in/not part of a session
@@ -44,10 +46,16 @@ function init() {
 
 }
 
-function startGame(state) {
-  console.log(state);
+async function startGame(sessionID) {
+  let session = await getSession(sessionID);
+  let input = document.querySelector("#username_input");
+  user = input.value;
+  utils.saveToLocalStorage(lsVars.user, user);
+  utils.saveToLocalStorage(lsVars.sessionID, sessionID);
+  utils.saveToLocalStorage(lsVars.sessionName, session.sessionName);
+  console.log(session.game_state);
   // return;
-  if (state === "lobby") window.location = 'lobby.html';
+  if (session.game_state === "lobby") window.location = 'lobby.html';
   else window.location = 'game.html';
 }
 
@@ -70,15 +78,12 @@ async function login() {
     selectedSessionID = sessionDropDown.options[sessionDropDown.selectedIndex].value;
     selectedSessionName = sessionDropDown.options[sessionDropDown.selectedIndex].innerHTML;
   }
-  user = input.value;
-  utils.saveToLocalStorage(lsVars.user, user);
-  utils.saveToLocalStorage(lsVars.sessionID, selectedSessionID);
-  utils.saveToLocalStorage(lsVars.sessionName, selectedSessionName);
+
   if (selectedSessionID) {
-    let session = await getSession(selectedSessionID);
+
     addUserToSession(selectedSessionID, user).then(
       () => {
-        startGame(session.game_state);
+        startGame(selectedSessionID);
       },
       () => {return false;}
     );

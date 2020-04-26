@@ -4,23 +4,14 @@ async function init() {
 
   userData = getUserData();
   user = userData.user;
-  if (!user) {
-      // return to login
-      quit();
-      return;
-  }
   sessionID = userData.sessionID;
   sessionName = userData.sessionName;
-  if (!sessionID) {
-      // return to login
-      quit();
-      return;
-  }
+
   let session = await getSession(sessionID);
   console.log(session);
   update_display(session);
 
-  // listentoSession(userData.sessionID);
+  listentoSession(userData.sessionID);
 }
 
 function update_display(session) {
