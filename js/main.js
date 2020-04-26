@@ -54,6 +54,11 @@ async function init() {
     let data = await db.collection("sessions").doc(utils.getSessionID()).get();
     init_users(data.data().users);
 
+    if(is_host(data.data().users, getUserData().user)){
+      sessionID = utils.getSessionID();
+      await start_game(sessionID);
+    }
+
     listenToMessages(sessionID);
     listentoState(sessionID);
 }
