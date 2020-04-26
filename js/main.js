@@ -126,7 +126,7 @@ function listentoState(sessionID) {
             document.querySelector("body").classList.add("state_" + snapshot.data().game_state);
 
             if(snapshot.data().game_state == "voting") {
-                  document.querySelectorAll(".btn-like").forEach((button) => { button.style.display = "block"; }
+                  document.querySelectorAll(".btn-like").forEach((button) => { button.style.display = "block"; });
             }
 
             document.querySelector("body").classList.remove("is_writer");
