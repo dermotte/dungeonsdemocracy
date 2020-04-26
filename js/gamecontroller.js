@@ -116,10 +116,13 @@ const update_users = () => {
     }
   }
 
+  console.log("we have " + writers + " writers");
+  console.log(users_finished + " users are finished");
+
   if(users_finished == writers){
     console.log("everybody wrote");
     update_state(session_states.voting);
-    
+
     // show highscore?
   }
 }
