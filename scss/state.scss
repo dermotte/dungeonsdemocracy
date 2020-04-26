@@ -1,7 +1,17 @@
+.btn-like {
+  display: none;
+}
+
 body #inputText {
     display: none;
 }
 
 body.state_writing.is_writer #inputText {
     display: block;
+}
+
+body.state_voting {
+  .btn-like {
+    display: block;
+  }
 }
