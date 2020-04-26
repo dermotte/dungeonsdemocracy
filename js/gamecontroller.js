@@ -24,7 +24,7 @@ const new_message = {
     votes: []
 }
 
-var state = state ? : { // reflected in the session ...
+var state = state ? state : { // reflected in the session ...
     game_state: session_states.lobby,
     userList: [{
         is_writer: false,
