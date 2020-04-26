@@ -125,6 +125,10 @@ function listentoState(sessionID) {
             document.querySelector("body").classList.remove("state_voting");
             document.querySelector("body").classList.add("state_" + snapshot.data().game_state);
 
+            if(snapshot.data().game_state == "voting") {
+                  document.querySelector(".btn-like").style.display = "block";
+            }
+
             document.querySelector("body").classList.remove("is_writer");
             if(snapshot.data().userList) {
               for(let user of snapshot.data().userList) {
