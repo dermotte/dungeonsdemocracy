@@ -1,7 +1,7 @@
-body input {
+body #inputText {
     display: none;
 }
 
-body.state_writing.is_writer input {
+body.state_writing.is_writer #inputText {
     display: block;
 }
