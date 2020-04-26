@@ -1,4 +1,4 @@
-var MIN_USERS = 1;
+var MIN_USERS = 3;
 
 async function init() {
 
