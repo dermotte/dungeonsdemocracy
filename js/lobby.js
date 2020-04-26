@@ -30,19 +30,16 @@ function update_display(session) {
 async function start() {
   sessionID = utils.getSessionID();
   await start_game(sessionID);
-  window.location = 'game.html';
+  // window.location = 'game.html';
 }
 
 function listentoSession(sessionID) {
     console.log(sessionID);
     num_users_field = document.querySelector("#num_users");
-    db.collection("session").where("sessionID", "==", sessionID)
+    db.collection("sessions").doc(sessionID)
         .onSnapshot(function (snapshot) {
-            snapshot.docChanges().forEach(async function (change) {
                 u = getUserData();
-                console.log(change.doc.data())
+                console.log(snapshot.data());
 
-
-            });
         });
 }
