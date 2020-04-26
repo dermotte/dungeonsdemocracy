@@ -152,7 +152,7 @@ function getHeader() {
 }
 
 function getRandomStartSentence() {
-    let sentences = fs.readFileSync('./startSentences.txt', 'utf8').split("\r\n").filter(s => s.length > 0);
+    let sentences = fs.readFileSync('./startSentences.txt', 'utf8').split("\n").filter(s => s.length > 0);
     let randomIdx = Math.floor(Math.random() * sentences.length);
     let randomSentence = sentences[randomIdx];
     return randomSentence;
