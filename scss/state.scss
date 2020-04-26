@@ -2,11 +2,11 @@
   display: none;
 }
 
-body #inputText {
+body .submitMessage {
     display: none;
 }
 
-body.state_writing.is_writer #inputText {
+body.state_writing.is_writer .submitMessage {
     display: block;
 }
 
